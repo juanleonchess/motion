@@ -4,11 +4,14 @@
  * state machine sm-main and view model vm-main data binding.
  */
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
-import { Rive } from '@rive-app/canvas'
+import { Rive, Layout, Fit } from '@rive-app/canvas'
 import rivUrl from '@/assets/animations/gomodal-quickanalysis_v6.riv?url'
 
 const belowCanvasRefs = ref([])
 const belowRiveInstances = ref([])
+const containerRef = ref(null)
+let resizeObserver = null
+let dprMediaQuery = null
 
 function setBelowCanvasRef(el, index) {
   if (el) {
@@ -36,6 +39,10 @@ function applyViewModelBindings(riveInstance, index) {
   if (moveTypeEnum) moveTypeEnum.value = b.moveTypeEnum
 }
 
+function resizeAllRiveSurfaces() {
+  belowRiveInstances.value.forEach((r) => r.resizeDrawingSurfaceToCanvas())
+}
+
 onMounted(() => {
   nextTick(async () => {
     let buffer
@@ -54,6 +61,7 @@ onMounted(() => {
       const r = new Rive({
         buffer,
         canvas: belowCanvas,
+        layout: new Layout({ fit: Fit.Layout }),
         autoplay: false,
         stateMachines: 'sm-main',
         autoBind: true,
@@ -68,10 +76,29 @@ onMounted(() => {
       })
       belowRiveInstances.value.push(r)
     }
+    await nextTick()
+    const container = containerRef.value
+    if (container) {
+      resizeObserver = new ResizeObserver(resizeAllRiveSurfaces)
+      resizeObserver.observe(container)
+      belowCanvasRefs.value.forEach((canvas) => {
+        if (canvas) resizeObserver.observe(canvas)
+      })
+      dprMediaQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
+      dprMediaQuery.addEventListener('change', resizeAllRiveSurfaces)
+    }
   })
 })
 
 onUnmounted(() => {
+  if (containerRef.value && resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
+  }
+  if (dprMediaQuery) {
+    dprMediaQuery.removeEventListener('change', resizeAllRiveSurfaces)
+    dprMediaQuery = null
+  }
   belowRiveInstances.value.forEach((r) => r.cleanup())
   belowRiveInstances.value = []
 })
@@ -80,14 +107,12 @@ onUnmounted(() => {
 <template>
   <div class="motion-page">
     <div class="motion-below">
-      <div class="motion-below__container">
+      <div ref="containerRef" class="motion-below__container">
         <canvas
           v-for="(_, idx) in 3"
           :key="idx"
           :ref="(el) => setBelowCanvasRef(el, idx)"
           class="motion-below__canvas"
-          width="133"
-          height="64"
         />
       </div>
     </div>
@@ -109,11 +134,19 @@ onUnmounted(() => {
   display: flex;
   flex-direction: row;
   gap: 8px;
+  width: 100%;
+  max-width: 1264px; /* 3 * 416 + 2 * 8 gap */
+  height: 64px;
 }
 
 .motion-below__canvas {
   display: block;
-  width: 133px;
-  height: 64px;
+  flex: 1 1 0;
+  min-width: 0; /* allow flex shrinking */
+  max-width: 416px;
+  width: 100%;
+  height: 100%;
+  min-height: 54px;
+  max-height: 64px;
 }
 </style>

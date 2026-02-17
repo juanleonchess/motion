@@ -1,6 +1,17 @@
 # my-app
 
-This template should help get you started developing with Vue 3 in Vite.
+Vue 3 + Vite app showcasing Rive animations for motion metric cards.
+
+## Motion Metric Cards
+
+The `MotionMetricCards` component renders three Rive animations (`gomodal-quickanalysis_v6.riv`) with:
+
+- **Fit.Layout** – Uses Rive's layout engine so the artboard fills its container and scales responsively without deforming elements.
+- **Responsive containers** – Each canvas flexes with the page (width 300–416px, height 54–64px). The Rive `responsivenes` state machine layer switches between `default_height` (≥55px) and `compact_height` (≤54px) based on rendered height.
+- **Resize handling** – `ResizeObserver` on the container and canvases, plus a device-pixel-ratio listener, call `resizeDrawingSurfaceToCanvas()` so layouts update on window resize and DPR changes.
+- **View model bindings** – `vm-main` drives move strings, counters, and move-type enums per card.
+
+See [Rive Layout docs](https://rive.app/docs/runtimes/layout) for fit modes and responsive layouts.
 
 ## Recommended IDE Setup
 
