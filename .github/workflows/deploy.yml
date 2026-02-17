@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
 
 permissions:
   contents: read
@@ -11,9 +14,12 @@ permissions:
 
 jobs:
   build:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -39,6 +45,7 @@ jobs:
           path: my-app/dist
 
   deploy:
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
