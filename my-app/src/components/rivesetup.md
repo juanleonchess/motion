@@ -8,13 +8,13 @@ How the Rive animation file is loaded, configured, and bound inside `MotionMetri
 
 | Item | Value |
 |------|-------|
-| **File** | `gomodal-quickanalysis_v6.riv` |
+| **File** | `gameplay_v6gameoverscreen_quickanalysis.riv` |
 | **Location** | `src/assets/animations/` |
 | **Runtime** | `@rive-app/canvas` (Canvas renderer) |
 | **Import** | Vite `?url` suffix for asset URL resolution |
 
 ```js
-import rivUrl from '@/assets/animations/gomodal-quickanalysis_v6.riv?url'
+import rivUrl from '@/assets/animations/gameplay_v6gameoverscreen_quickanalysis.riv?url'
 ```
 
 ---

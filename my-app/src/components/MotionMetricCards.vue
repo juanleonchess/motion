@@ -1,11 +1,11 @@
 <script setup>
 /**
- * Motion Library – Rive animation (gomodal-quickanalysis_v6.riv) with
+ * Motion Library – Rive animation (gameplay_v6gameoverscreen_quickanalysis.riv) with
  * state machine sm-main and view model vm-main data binding.
  */
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import { Rive, Layout, Fit } from '@rive-app/canvas'
-import rivUrl from '@/assets/animations/gomodal-quickanalysis_v6.riv?url'
+import rivUrl from '@/assets/animations/gameplay_v6gameoverscreen_quickanalysis.riv?url'
 
 const belowCanvasRefs = ref([])
 const belowRiveInstances = ref([])

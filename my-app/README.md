@@ -4,7 +4,7 @@ Vue 3 + Vite app showcasing Rive animations for motion metric cards.
 
 ## Motion Metric Cards
 
-The `MotionMetricCards` component renders three Rive animations (`gomodal-quickanalysis_v6.riv`) with:
+The `MotionMetricCards` component renders three Rive animations (`gameplay_v6gameoverscreen_quickanalysis.riv`) with:
 
 - **Fit.Layout** – Uses Rive's layout engine so the artboard fills its container and scales responsively without deforming elements.
 - **Responsive containers** – Each canvas flexes with the page (width 300–416px, height 54–64px). The Rive `responsivenes` state machine layer switches between `default_height` (≥55px) and `compact_height` (≤54px) based on rendered height.

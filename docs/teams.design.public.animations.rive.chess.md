@@ -1,7 +1,7 @@
 # Rive Configuration: Quick Analysis Animations (Chess)
 
 **Key:** `teams.design.public.animations.rive chess`  
-**Source:** `gomodal-quickanalysis_v6.riv`
+**Source:** `gameplay_v6gameoverscreen_quickanalysis.riv`
 
 ## Overview
 
