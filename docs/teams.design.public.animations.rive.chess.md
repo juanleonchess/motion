@@ -21,22 +21,36 @@ Quick analysis move-type animations (Best, Great, Brilliant, etc.) displayed in 
 | `move-string` | string | Display label for move type | "Mejor", "Great", "Brillante" |
 | `move-counter` | **number** | Move count (use `vmi.number()`, not `string`) | 8, 9, 12 |
 | `position-delay-enum` | enum | Timing/classification for reveal animation | See below |
-| `move-type-enum` | enum | Move type for state machine | "Best", "Great", "Brilliant" |
-| `restart` | trigger | Re-evaluate state machine after binding | Call `.trigger()` after setting values |
+| `move-type-enum` | enum | Move type for state machine | See below |
 
 ## position-delay-enum Values
 
-| Value | Effect |
-|-------|--------|
-| `firstMoveClassification` | First move timing |
-| `secondMoveClassification` | Second move timing |
-| `thirdMoveClassification` | Third move timing |
+| Value | Delay |
+|-------|-------|
+| `firstMoveClassification` | 0ms |
+| `secondMoveClassification` | 200ms |
+| `thirdMoveClassification` | 400ms |
+
+## move-type-enum Values (all possible configurations)
+
+| Value |
+|-------|
+| `All` |
+| `Brilliant` |
+| `Great` |
+| `Best` |
+| `Excellent` |
+| `Good` |
+| `Book` |
+| `Inaccuracy` |
+| `Mistake` |
+| `Miss` |
+| `Blunder` |
 
 ## Implementation Notes
 
 1. **move-counter is number:** Use `vmi.number('move-counter')` and set numeric values. `vmi.string('move-counter')` returns null.
-2. **Fire restart after binding:** Call `vmi.trigger('restart').trigger()` after setting all view model values so the state machine re-evaluates with the new data.
-3. **Binding order:** Set string, number, enum values, then fire restart trigger.
+2. **Binding order:** Set string, number, and enum values.
 
 ## Usage in Vue (MotionMetricCards.vue)
 
@@ -55,11 +69,9 @@ function applyViewModelBindings(riveInstance, index) {
   const moveCounter = vmi.number('move-counter')
   const positionDelayEnum = vmi.enum('position-delay-enum')
   const moveTypeEnum = vmi.enum('move-type-enum')
-  const restartTrigger = vmi.trigger('restart')
   if (moveString) moveString.value = b.moveString
   if (moveCounter) moveCounter.value = b.moveCounter
   if (positionDelayEnum) positionDelayEnum.value = b.positionDelayEnum
   if (moveTypeEnum) moveTypeEnum.value = b.moveTypeEnum
-  if (restartTrigger) restartTrigger.trigger()
 }
 ```

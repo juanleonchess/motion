@@ -28,12 +28,10 @@ function applyViewModelBindings(riveInstance, index) {
   const moveCounter = vmi.number('move-counter')
   const positionDelayEnum = vmi.enum('position-delay-enum')
   const moveTypeEnum = vmi.enum('move-type-enum')
-  const restartTrigger = vmi.trigger('restart')
   if (moveString) moveString.value = b.moveString
   if (moveCounter) moveCounter.value = b.moveCounter
   if (positionDelayEnum) positionDelayEnum.value = b.positionDelayEnum
   if (moveTypeEnum) moveTypeEnum.value = b.moveTypeEnum
-  if (restartTrigger) restartTrigger.trigger()
 }
 
 onMounted(() => {

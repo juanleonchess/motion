@@ -1,0 +1,23 @@
+---
+description: Chess.com Design System guidelines for AI assistance
+globs: ["**/*.vue", "**/*.ts", "**/*.js", "**/*.css"]
+---
+
+# Chess.com Design System Rules
+
+When working on Chess.com UI code, follow these guidelines:
+
+## Always Use the MCP First
+
+Before writing UI code, **always query the Chess.com Design System MCP**:
+
+1. **Components**: Use `search_components` or `get_component_api`
+2. **Tokens**: Use `search_tokens` or `get_token_value` for colors, spacing
+3. **Icons**: Use `search_glyphs` for monochrome icons
+4. **Guidelines**: Use `get_do_dont` for best practices
+
+## Component Usage
+
+- Always use `cc-` prefixed components from `@chesscom/design-system`
+- Never hardcode colors - use CSS variables
+- Never hardcode spacing - use spacing tokens
