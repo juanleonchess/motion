@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open in Simple Browser",
+      "type": "shell",
+      "command": "echo",
+      "args": ["${input:openSimpleBrowser}"],
+      "problemMatcher": [],
+      "presentation": { "reveal": "never" }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "openSimpleBrowser",
+      "type": "command",
+      "command": "simpleBrowser.api.open",
+      "args": ["http://localhost:5174/my-chess-prototype/my-app/"]
+    }
+  ]
+}
