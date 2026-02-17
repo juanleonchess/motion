@@ -11,7 +11,9 @@ const belowCanvasRefs = ref([])
 const belowRiveInstances = ref([])
 
 function setBelowCanvasRef(el, index) {
-  if (el) belowCanvasRefs.value[index] = el
+  if (el) {
+    belowCanvasRefs.value[index] = el
+  }
 }
 
 const BINDINGS = [
@@ -52,12 +54,13 @@ onMounted(() => {
       const r = new Rive({
         buffer,
         canvas: belowCanvas,
-        autoplay: true,
+        autoplay: false,
         stateMachines: 'sm-main',
         autoBind: true,
         onLoad: () => {
           r.resizeDrawingSurfaceToCanvas()
           applyViewModelBindings(r, j)
+          r.play('sm-main')
         },
         onLoadError: (err) => {
           console.error('Rive below load error:', err)
